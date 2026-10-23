@@ -3,7 +3,7 @@
   "short_name": "Savings",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#14213D",
-  "theme_color": "#14213D",
+  "background_color": "#0B2A5B",
+  "theme_color": "#0B2A5B",
   "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
 }

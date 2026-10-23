@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Savings">
-<meta name="theme-color" content="#14213D">
+<meta name="theme-color" content="#0B2A5B">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" href="icon.png">
 <link rel="manifest" href="manifest.json">
@@ -15,13 +15,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#14213D; --paper:#EEF1F4; --card:#FFFFFF; --steel:#5B6B7F; --line:#D5DCE4;
-  --brass:#B8892B; --auto:#2E6F95; --med:#3E8E7E; --vac:#C9963A; --danger:#A23B3B;
-  --text:#14213D; --muted:#5B6B7F;
+  --ink:#0B2A5B; --paper:#F3F6FB; --card:#FFFFFF; --steel:#4A5A73; --line:#DCE3EE;
+  --brass:#F5B800; --auto:#1F6FEB; --med:#0FA67A; --vac:#F2711C; --danger:#D63B3B;
+  --text:#0F1E36; --muted:#4A5A73;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --paper:#0E1729; --card:#17233B; --line:#2A3A57; --text:#E9EDF2; --muted:#9AA9BC; color-scheme: dark; }
+  :root{ --paper:#08142B; --card:#11213F; --line:#23375C; --text:#EEF3FA; --muted:#A3B3CA; --auto:#4C8DFF; --med:#22C493; --vac:#FF8A3D; color-scheme: dark; }
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -31,13 +31,13 @@ body{
   padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
 }
 .num{font-family:"Barlow Condensed","Arial Narrow",sans-serif; font-weight:600; letter-spacing:.01em}
-header{background:var(--ink); color:#E9EDF2; padding:28px 20px 30px}
+header{background:var(--ink); color:#fff; padding:28px 20px 30px; border-bottom:4px solid var(--brass)}
 .wrap{max-width:720px; margin:0 auto}
 header h1{margin:0; font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:2rem; line-height:1.1}
-header p{margin:4px 0 0; color:#AFC0D4}
+header p{margin:4px 0 0; color:#B9CBE6}
 .total{display:flex; align-items:baseline; gap:10px; margin-top:22px; flex-wrap:wrap}
 .total .big{font-size:3.2rem; line-height:1; color:#fff}
-.total .of{color:#AFC0D4; font-size:1.1rem}
+.total .of{color:#B9CBE6; font-size:1.1rem}
 .shelf{display:flex; justify-content:space-between; gap:14px; margin-top:26px}
 .jar{flex:1; text-align:center; background:none; border:0; color:inherit; cursor:pointer; padding:0; font:inherit}
 .jar:focus-visible{outline:3px solid var(--brass); outline-offset:4px; border-radius:12px}
@@ -46,14 +46,15 @@ header p{margin:4px 0 0; color:#AFC0D4}
 .fill{position:absolute; left:6px; right:6px; bottom:6px; border-radius:0 0 14px 14px; transition:height .6s ease}
 .pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .jar .lbl{margin-top:8px; font-weight:600; font-size:.95rem}
-.jar .amt{color:#AFC0D4; font-size:.85rem}
+.jar .amt{color:#B9CBE6; font-size:.85rem}
 main{padding:20px 16px 40px}
 h2{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:1.5rem; margin:26px 4px 10px}
-.fund{background:var(--card); border:1px solid var(--line); border-left:6px solid var(--c); border-radius:10px; padding:18px; margin-bottom:14px}
+.fund{background:var(--card); border:1px solid var(--line); border-top:5px solid var(--c); border-radius:12px; padding:18px; margin-bottom:14px; box-shadow:0 2px 10px rgba(11,42,91,.06)}
+.fund .saved{color:var(--c)}
 .fund-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
 .fund h3{margin:0; font-size:1.2rem}
 .fund .saved{font-size:1.6rem}
-.bar{height:12px; background:var(--line); border-radius:6px; overflow:hidden; margin:10px 0 6px}
+.bar{height:14px; background:var(--line); border-radius:6px; overflow:hidden; margin:10px 0 6px}
 .bar span{display:block; height:100%; background:var(--c); border-radius:6px; transition:width .6s ease}
 .meta{display:flex; justify-content:space-between; color:var(--muted); font-size:.95rem; flex-wrap:wrap; gap:4px 12px}
 .plan{display:flex; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap}
@@ -66,7 +67,7 @@ h2{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:1.5rem;
 .actions{display:flex; gap:10px; margin-top:14px}
 button.btn{font:inherit; font-weight:600; border-radius:8px; padding:10px 16px; cursor:pointer; border:1px solid var(--line); background:var(--paper); color:var(--text)}
 button.btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
-@media (prefers-color-scheme: dark){ button.btn.primary{background:var(--brass); border-color:var(--brass); color:#14213D} }
+@media (prefers-color-scheme: dark){ button.btn.primary{background:var(--brass); border-color:var(--brass); color:#0B2A5B} }
 button.btn:focus-visible{outline:3px solid var(--brass); outline-offset:2px}
 details{margin-top:12px}
 summary{cursor:pointer; color:var(--muted); font-size:.95rem}
