@@ -1,0 +1,9 @@
+{
+  "name": "Savings Funds",
+  "short_name": "Savings",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#14213D",
+  "theme_color": "#14213D",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
+}

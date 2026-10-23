@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Savings Funds</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Savings">
+<meta name="theme-color" content="#14213D">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213D; --paper:#EEF1F4; --card:#FFFFFF; --steel:#5B6B7F; --line:#D5DCE4;
+  --brass:#B8892B; --auto:#2E6F95; --med:#3E8E7E; --vac:#C9963A; --danger:#A23B3B;
+  --text:#14213D; --muted:#5B6B7F;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --paper:#0E1729; --card:#17233B; --line:#2A3A57; --text:#E9EDF2; --muted:#9AA9BC; color-scheme: dark; }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper); color:var(--text);
+  font-family:"Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif; font-size:17px; line-height:1.5;
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0);
+}
+.num{font-family:"Barlow Condensed","Arial Narrow",sans-serif; font-weight:600; letter-spacing:.01em}
+header{background:var(--ink); color:#E9EDF2; padding:28px 20px 30px}
+.wrap{max-width:720px; margin:0 auto}
+header h1{margin:0; font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:2rem; line-height:1.1}
+header p{margin:4px 0 0; color:#AFC0D4}
+.total{display:flex; align-items:baseline; gap:10px; margin-top:22px; flex-wrap:wrap}
+.total .big{font-size:3.2rem; line-height:1; color:#fff}
+.total .of{color:#AFC0D4; font-size:1.1rem}
+.shelf{display:flex; justify-content:space-between; gap:14px; margin-top:26px}
+.jar{flex:1; text-align:center; background:none; border:0; color:inherit; cursor:pointer; padding:0; font:inherit}
+.jar:focus-visible{outline:3px solid var(--brass); outline-offset:4px; border-radius:12px}
+.lid{height:12px; width:62%; margin:0 auto; background:var(--brass); border-radius:4px 4px 0 0}
+.glass{position:relative; height:150px; border:3px solid #E9EDF2; border-radius:0 0 22px 22px; border-top-width:2px; overflow:hidden; background:rgba(255,255,255,.04)}
+.fill{position:absolute; left:6px; right:6px; bottom:6px; border-radius:0 0 14px 14px; transition:height .6s ease}
+.pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.jar .lbl{margin-top:8px; font-weight:600; font-size:.95rem}
+.jar .amt{color:#AFC0D4; font-size:.85rem}
+main{padding:20px 16px 40px}
+h2{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:1.5rem; margin:26px 4px 10px}
+.fund{background:var(--card); border:1px solid var(--line); border-left:6px solid var(--c); border-radius:10px; padding:18px; margin-bottom:14px}
+.fund-top{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.fund h3{margin:0; font-size:1.2rem}
+.fund .saved{font-size:1.6rem}
+.bar{height:12px; background:var(--line); border-radius:6px; overflow:hidden; margin:10px 0 6px}
+.bar span{display:block; height:100%; background:var(--c); border-radius:6px; transition:width .6s ease}
+.meta{display:flex; justify-content:space-between; color:var(--muted); font-size:.95rem; flex-wrap:wrap; gap:4px 12px}
+.plan{display:flex; align-items:center; gap:10px; margin-top:14px; flex-wrap:wrap}
+.plan label{color:var(--muted); font-size:.95rem}
+.money-in{display:flex; align-items:center; border:1px solid var(--line); border-radius:8px; padding:0 10px; background:var(--paper)}
+.money-in input{border:0; background:transparent; color:var(--text); font:inherit; width:90px; padding:9px 4px}
+.money-in input:focus{outline:none}
+.money-in:focus-within{outline:3px solid var(--brass)}
+.eta{font-weight:600}
+.actions{display:flex; gap:10px; margin-top:14px}
+button.btn{font:inherit; font-weight:600; border-radius:8px; padding:10px 16px; cursor:pointer; border:1px solid var(--line); background:var(--paper); color:var(--text)}
+button.btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
+@media (prefers-color-scheme: dark){ button.btn.primary{background:var(--brass); border-color:var(--brass); color:#14213D} }
+button.btn:focus-visible{outline:3px solid var(--brass); outline-offset:2px}
+details{margin-top:12px}
+summary{cursor:pointer; color:var(--muted); font-size:.95rem}
+.hist{list-style:none; padding:0; margin:8px 0 0}
+.hist li{display:flex; justify-content:space-between; gap:8px; padding:8px 0; border-top:1px solid var(--line); font-size:.95rem}
+.hist .neg{color:var(--danger)}
+.hist .del{background:none; border:0; color:var(--muted); cursor:pointer; font-size:1rem; padding:0 4px}
+.summary-card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px}
+.summary-card .row{display:flex; justify-content:space-between; padding:6px 0}
+.summary-card .row + .row{border-top:1px solid var(--line)}
+.tools{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+.note{color:var(--muted); font-size:.9rem; margin:10px 4px 0}
+dialog{border:0; border-radius:14px; padding:0; width:min(92vw,420px); background:var(--card); color:var(--text)}
+dialog::backdrop{background:rgba(10,18,35,.6)}
+.dlg{padding:22px}
+.dlg h3{margin:0 0 14px; font-family:"Barlow Condensed",sans-serif; font-size:1.5rem}
+.field{display:block; margin-bottom:12px}
+.field span{display:block; color:var(--muted); font-size:.9rem; margin-bottom:4px}
+.field input{width:100%; font:inherit; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--text)}
+.err{color:var(--danger); min-height:1.2em; font-size:.9rem}
+.toast{position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0)); transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; opacity:0; transition:.3s; pointer-events:none}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Savings Funds</h1>
+    <p>Automobile, Medical and Vacation</p>
+    <div class="total"><span class="big num" id="totalSaved">$0</span><span class="of" id="totalGoal">of $9,000 saved</span></div>
+    <div class="shelf" id="shelf"></div>
+  </div>
+</header>
+<main class="wrap">
+  <h2>Your funds</h2>
+  <div id="funds"></div>
+
+  <h2>Monthly plan</h2>
+  <div class="summary-card" id="summary"></div>
+  <p class="note">Estimates assume steady monthly deposits and no withdrawals. Each fund reaches its goal at a different time.</p>
+
+  <h2>Backup</h2>
+  <div class="summary-card">
+    Your entries are saved on this device. Download a backup now and then so nothing is lost if the browser data is cleared.
+    <div class="tools">
+      <button class="btn" id="exportBtn">Download backup</button>
+      <button class="btn" id="importBtn">Restore backup</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+  </div>
+</main>
+
+<dialog id="dlg">
+  <form class="dlg" method="dialog" id="dlgForm">
+    <h3 id="dlgTitle">Add deposit</h3>
+    <label class="field"><span>Amount</span><input id="fAmt" type="number" inputmode="decimal" step="0.01" min="0.01" required></label>
+    <label class="field"><span>Date</span><input id="fDate" type="date" required></label>
+    <label class="field"><span>Note (optional)</span><input id="fNote" type="text" maxlength="60"></label>
+    <div class="err" id="fErr"></div>
+    <div class="actions">
+      <button class="btn primary" id="fSave" value="save">Save</button>
+      <button class="btn" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='savingsFunds.v1';
+const DEFAULT={funds:[
+  {id:'auto',name:'Automobile',goal:2000,monthly:85,color:'var(--auto)',entries:[]},
+  {id:'med',name:'Medical',goal:2000,monthly:85,color:'var(--med)',entries:[]},
+  {id:'vac',name:'Vacation',goal:5000,monthly:175,color:'var(--vac)',entries:[]}
+]};
+let state;
+try{ state=JSON.parse(localStorage.getItem(KEY))||structuredClone(DEFAULT);}catch(e){ state=structuredClone(DEFAULT); }
+const save=()=>{ try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} };
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString('en-US',{style:'currency',currency:'USD',minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const bal=f=>f.entries.reduce((s,e)=>s+e.amount,0);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function eta(f){
+  const left=f.goal-bal(f);
+  if(left<=0) return {text:'Goal reached',months:0};
+  if(!(f.monthly>0)) return {text:'Set a monthly amount',months:null};
+  const m=Math.ceil(left/f.monthly);
+  const d=new Date(); d.setMonth(d.getMonth()+m);
+  return {text:`About ${m} month${m===1?'':'s'} (${d.toLocaleDateString('en-US',{month:'short',year:'numeric'})})`,months:m};
+}
+
+function render(){
+  const tot=state.funds.reduce((s,f)=>s+bal(f),0), goal=state.funds.reduce((s,f)=>s+f.goal,0);
+  $('totalSaved').textContent=fmt(tot);
+  $('totalGoal').textContent=`of ${fmt(goal)} saved`;
+  $('shelf').innerHTML=state.funds.map(f=>{
+    const p=Math.min(100,Math.max(0,bal(f)/f.goal*100));
+    return `<button class="jar" data-jump="${f.id}" aria-label="${f.name} fund, ${Math.round(p)} percent">
+      <div class="lid"></div><div class="glass"><div class="fill" style="height:calc(${p}% - ${p?6:0}px);background:${f.color}"></div><div class="pct num">${Math.round(p)}%</div></div>
+      <div class="lbl">${f.name}</div><div class="amt">${fmt(bal(f))} / ${fmt(f.goal)}</div></button>`;
+  }).join('');
+  $('funds').innerHTML=state.funds.map(f=>{
+    const b=bal(f), p=Math.min(100,Math.max(0,b/f.goal*100)), e=eta(f);
+    const hist=[...f.entries].sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`
+      <li><span>${new Date(x.date+'T12:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}${x.note?' — '+esc(x.note):''}</span>
+      <span><span class="${x.amount<0?'neg':''}">${x.amount<0?'−':'+'}${fmt(Math.abs(x.amount))}</span>
+      <button class="del" data-del="${f.id}|${x.id}" aria-label="Delete entry">✕</button></span></li>`).join('');
+    return `<section class="fund" id="fund-${f.id}" style="--c:${f.color}">
+      <div class="fund-top"><h3>${f.name}</h3><span class="saved num">${fmt(b)}</span></div>
+      <div class="bar"><span style="width:${p}%"></span></div>
+      <div class="meta"><span>Goal ${fmt(f.goal)}</span><span>${b>=f.goal?'Fully funded':fmt(f.goal-b)+' to go'}</span></div>
+      <div class="plan"><label for="m-${f.id}">Monthly</label>
+        <span class="money-in">$<input id="m-${f.id}" type="number" inputmode="decimal" min="0" step="5" value="${f.monthly}" data-monthly="${f.id}"></span>
+        <span class="eta">${e.text}</span></div>
+      <div class="actions"><button class="btn primary" data-add="${f.id}">Add deposit</button><button class="btn" data-wd="${f.id}">Withdraw</button></div>
+      <details><summary>History (${f.entries.length})</summary><ul class="hist">${hist||'<li>No entries yet. Add your first deposit above.</li>'}</ul></details>
+    </section>`;
+  }).join('');
+  const monthly=state.funds.reduce((s,f)=>s+(+f.monthly||0),0);
+  const ms=state.funds.map(f=>eta(f).months);
+  const all=ms.every(m=>m!==null)?Math.max(...ms):null;
+  $('summary').innerHTML=`
+    <div class="row"><span>Total monthly contribution</span><span class="num" style="font-size:1.3rem">${fmt(monthly)}</span></div>
+    ${state.funds.map(f=>`<div class="row"><span>${f.name}</span><span>${eta(f).text}</span></div>`).join('')}
+    <div class="row"><strong>All three funded</strong><strong>${all===null?'—':all===0?'Done':`About ${all} months`}</strong></div>`;
+}
+
+let mode=null;
+function openDlg(id,kind){
+  const f=state.funds.find(x=>x.id===id); mode={id,kind};
+  $('dlgTitle').textContent=`${kind==='add'?'Add deposit to':'Withdraw from'} ${f.name}`;
+  $('fSave').textContent=kind==='add'?'Add deposit':'Withdraw';
+  $('fAmt').value=''; $('fNote').value=''; $('fErr').textContent='';
+  $('fDate').value=new Date().toLocaleDateString('en-CA');
+  $('dlg').showModal(); $('fAmt').focus();
+}
+$('dlgForm').addEventListener('submit',ev=>{
+  if(ev.submitter && ev.submitter.value!=='save') return;
+  const amt=Math.round(parseFloat($('fAmt').value)*100)/100;
+  if(!(amt>0)){ ev.preventDefault(); $('fErr').textContent='Enter an amount greater than $0.'; return; }
+  const f=state.funds.find(x=>x.id===mode.id);
+  if(mode.kind==='wd' && amt>bal(f)){ ev.preventDefault(); $('fErr').textContent=`The ${f.name} fund only has ${fmt(bal(f))}.`; return; }
+  f.entries.push({id:Date.now().toString(36),date:$('fDate').value,note:$('fNote').value.trim(),amount:mode.kind==='add'?amt:-amt});
+  save(); render(); toast(mode.kind==='add'?`Deposit added to ${f.name}`:`Withdrawal recorded from ${f.name}`);
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-add],[data-wd],[data-del],[data-jump]'); if(!t) return;
+  if(t.dataset.add) openDlg(t.dataset.add,'add');
+  else if(t.dataset.wd) openDlg(t.dataset.wd,'wd');
+  else if(t.dataset.jump) $('fund-'+t.dataset.jump).scrollIntoView({behavior:'smooth',block:'center'});
+  else if(t.dataset.del){
+    const [fid,eid]=t.dataset.del.split('|');
+    if(confirm('Delete this entry?')){ const f=state.funds.find(x=>x.id===fid); f.entries=f.entries.filter(x=>x.id!==eid); save(); render(); toast('Entry deleted'); }
+  }
+});
+document.addEventListener('change',e=>{
+  if(e.target.dataset.monthly){ const f=state.funds.find(x=>x.id===e.target.dataset.monthly); f.monthly=Math.max(0,parseFloat(e.target.value)||0); save(); render(); }
+});
+
+$('exportBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`savings-funds-backup-${new Date().toLocaleDateString('en-CA')}.json`; a.click();
+  toast('Backup downloaded');
+};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{
+  try{ const d=JSON.parse(await e.target.files[0].text()); if(!Array.isArray(d.funds)) throw 0;
+    if(confirm('Replace everything here with this backup?')){ state=d; save(); render(); toast('Backup restored'); } }
+  catch(_){ toast('That file is not a Savings Funds backup'); }
+  e.target.value='';
+};
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2200); }
+render();
+</script>
+</body>
+</html>
